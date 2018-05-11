@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.duowan.featuresActivity.SettingFeatureActivity">
+
+    <RelativeLayout
+        android:id="@+id/setting_feature_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/setting_feature_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/nav_back_normal" />
+
+        <TextView
+            android:id="@+id/setting_feature_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="方案设置"
+            android:textColor="#ff333333"
+            android:textSize="17sp" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/setting_feature_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#e0e0e0"
+        app:layout_constraintTop_toBottomOf="@id/setting_feature_bar" />
+
+</LinearLayout>

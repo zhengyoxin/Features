@@ -1,0 +1,62 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.example.zhengyongxin.abtestfeatures"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField 'String[]', 'FEATURE_INJECT_NAME_ARRAY', "${getAllProjectName()}"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                it.argument('moduleName', project.getName())
+                it.argument('projectName', rootProject.project.getName())
+            }
+        }
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+String getAllProjectName() {
+    println("getAllProjectName")
+    StringBuffer result = new StringBuffer("{")
+    Set<String> keySet = rootProject.childProjects.keySet()
+    for (int i = 0; i < keySet.size(); i++) {
+        if (i > 0) {
+            result.append(",")
+        }
+        result.append("\"").append(rootProject.project.getName()).append("\$\$").append(keySet[i]).append("\"")
+    }
+    result.append("}")
+    return result.toString()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation("com.android.support:appcompat-v7:26.1.0") {
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    compile project(':features-annotation')
+    compile project(':features-activity')
+    kapt project(':features-compiler')
+    compile("com.github.zhengyoxin:MultiVLayout:0.1.0") {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
+}

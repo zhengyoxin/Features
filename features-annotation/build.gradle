@@ -1,0 +1,40 @@
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+// Fixed when use 'gradle release', other project can't fetch lib because there still
+// depend old version
+ext.orgVersion = "${version}"
+project.afterEvaluate {
+    def gradleProperties = new File(project.rootDir, "gradle.properties")
+    if (gradleProperties.exists()) {
+        Properties properties = new Properties()
+        gradleProperties.withInputStream {
+            instr -> properties.load(instr)
+        }
+        ext.orgVersion = properties.getProperty('version')
+    }
+}
+jar.doLast { j ->
+    def orgVersion = project.ext.orgVersion
+    File targetFile = new File(j.archivePath.parentFile, "${j.baseName}-${orgVersion}.jar")
+    if (!targetFile.exists()) {
+        project.copy {
+            from j.archivePath.parentFile
+            into j.archivePath.parentFile
+            include j.archivePath.name
+            rename j.archivePath.name, targetFile.name
+        }
+    }
+}

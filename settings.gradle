@@ -1,0 +1,1 @@
+include ':app', ':features-annotation', ':features-activity', 'features-compiler'

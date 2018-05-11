@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#e0e0e0"
+    android:gravity="center_vertical"
+    android:paddingLeft="5dp">
+
+    <TextView
+        android:id="@+id/setting_title_name"
+        android:layout_width="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_height="25dp"
+        android:text="title"
+        android:textColor="#999999" />
+
+</RelativeLayout>
